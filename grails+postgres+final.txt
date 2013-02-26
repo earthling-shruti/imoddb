@@ -1,0 +1,51 @@
+Grails and Postgres:
+1. Download and copy postgresql-9.2-1002.jdbc4 to application/lib folder
+2. Add following to BuildConfig.groovy in "dependencies:
+	runtime 'postgresql:postgresql-9.2-1002.jdbc4'
+(Edit: This isn't needed.)
+3. Changes in DataSource.groovy:
+dataSource {
+    pooled = true
+    driverClassName = "org.postgresql.Driver"
+    username = "grails"
+    password = "grails"
+}
+hibernate {
+    cache.use_second_level_cache = true
+    cache.use_query_cache = true
+    cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
+}
+// environment specific settings
+environments {
+    development {
+        dataSource {
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:postgresql:imoddb"
+        }
+    }
+    test {
+        dataSource {
+            dbCreate = "update"
+            url = "jdbc:postgresql:imoddb"
+        }
+    }
+    production {
+        dataSource {
+            dbCreate = "update"
+            url = "jdbc:postgresql:imoddb"
+            pooled = true
+            properties {
+               maxActive = -1
+               minEvictableIdleTimeMillis=1800000
+               timeBetweenEvictionRunsMillis=1800000
+               numTestsPerEvictionRun=3
+               testOnBorrow=true
+               testWhileIdle=true
+               testOnReturn=true
+               validationQuery="SELECT 1"
+            }
+        }
+    }
+}
+
+4. Make sure the database can be connected to before saving and running grails run-app
