@@ -2,7 +2,6 @@ Grails and Postgres:
 1. Download and copy postgresql-9.2-1002.jdbc4 to application/lib folder
 2. Add following to BuildConfig.groovy in "dependencies:
 	runtime 'postgresql:postgresql-9.2-1002.jdbc4'
-(Edit: This isn't needed.)
 3. Changes in DataSource.groovy:
 dataSource {
     pooled = true
