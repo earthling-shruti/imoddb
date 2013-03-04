@@ -1,10 +1,10 @@
 CREATE SCHEMA public;
 
-CREATE TABLE help ( 
+CREATE TABLE "help" ( 
 	"helpID"             integer  NOT NULL,
 	"helpItemID"         varchar( 255 )  ,
 	"helpText"           varchar( 255 )  ,
-	CONSTRAINT help_pkey PRIMARY KEY ( "helpID" )
+	CONSTRAINT "help_pkey" PRIMARY KEY ( "helpID" )
  );
 
 CREATE TABLE "learningDomain" ( 
@@ -16,7 +16,7 @@ CREATE TABLE "learningDomain" (
 CREATE TABLE "actionWord" ( 
 	"actionID"           integer  NOT NULL,
 	"categoryID"         integer  NOT NULL,
-	visibility           varchar( 255 )  ,
+	"visibility"         varchar( 255 )  ,
 	"actionWord"         varchar( 255 )  ,
 	"userID"             integer  NOT NULL,
 	"domainID"           integer  NOT NULL,
@@ -40,20 +40,20 @@ CREATE INDEX fki_domainID_fkey ON "domainCategory" ( "domainID" );
 CREATE TABLE "learningObjective" ( 
 	"learningObjectiveID" integer  NOT NULL,
 	"imodID"             integer  NOT NULL,
-	condition            varchar( 255 )  ,
-	performance          varchar( 255 )  ,
-	criteria             varchar( 255 )  ,
+	"condition"          varchar( 255 )  ,
+	"performance"        varchar( 255 )  ,
+	"criteria"           varchar( 255 )  ,
 	"learningDomain"     varchar( 255 )  ,
 	"domainCategory"     varchar( 255 )  ,
 	"completeLearningObjective" varchar( 255 )  ,
 	"contentID"          integer  NOT NULL,
-	indicator            varchar( 255 )  ,
+	"indicator"          varchar( 255 )  ,
 	"actionID"           integer  NOT NULL,
 	"criteriaType"       integer  NOT NULL,
 	CONSTRAINT "LearningObjetives_pkey" PRIMARY KEY ( "learningObjectiveID" ),
 	CONSTRAINT "actionID_fkey" FOREIGN KEY ( "actionID" ) REFERENCES "actionWord"( "actionID" )    ,
-	CONSTRAINT "learningObjetive_contentID_fkey" FOREIGN KEY ( "contentID" ) REFERENCES content( "contentID" )    ,
-	CONSTRAINT "learningObjetive_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES imod( "imodID" )    ,
+	CONSTRAINT "learningObjetive_contentID_fkey" FOREIGN KEY ( "contentID" ) REFERENCES "content"( "contentID" )    ,
+	CONSTRAINT "learningObjetive_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES "imod"( "imodID" )    ,
 	CONSTRAINT "learningObjective_criteriaType_fkey" FOREIGN KEY ( "criteriaType" ) REFERENCES "learningObjectiveCriteriaType"( "criteriaTypeID" )    
  );
 

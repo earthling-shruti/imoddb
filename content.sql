@@ -20,7 +20,7 @@ CREATE TABLE "pieChart" (
 	CONSTRAINT "pieChart_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES imod( "imodID" )    
  );
 
-CREATE TABLE schedule ( 
+CREATE TABLE "schedule" ( 
 	"imodID"             integer  NOT NULL,
 	repeats              varchar( 255 )  ,
 	"repeatsEvery"       varchar( 10 )  ,
@@ -46,7 +46,7 @@ CREATE TABLE "scheduleDate" (
 
 CREATE INDEX fki_imodID ON "scheduleDate" ( "imodID" );
 
-CREATE TABLE content ( 
+CREATE TABLE "content" ( 
 	"contentID"          integer  NOT NULL,
 	"learningObjectiveID" integer  NOT NULL,
 	"topicTitle"         varchar( 255 )  ,
