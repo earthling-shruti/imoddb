@@ -14,34 +14,34 @@ CREATE TABLE "contentResourceType" (
 
 CREATE TABLE "pieChart" ( 
 	"imodID"             integer  NOT NULL,
-	count                integer  ,
-	priority             integer  NOT NULL,
+	"count"              integer  ,
+	"priority"           integer  NOT NULL,
 	CONSTRAINT "pieChart_priority_fkey" FOREIGN KEY ( priority ) REFERENCES "contentPriorityCode"( "priorityID" )    ,
-	CONSTRAINT "pieChart_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES imod( "imodID" )    
+	CONSTRAINT "pieChart_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES "imod"( "imodID" )    
  );
 
 CREATE TABLE "schedule" ( 
 	"imodID"             integer  NOT NULL,
-	repeats              varchar( 255 )  ,
+	"repeats"            varchar( 255 )  ,
 	"repeatsEvery"       varchar( 10 )  ,
 	"repeatsDays"        varchar( 15 )  ,
 	"startDate"          varchar( 15 )  ,
 	"endDate"            varchar( 15 )  ,
 	"endOccurrences"     integer  ,
-	monday               integer  ,
-	tuesday              integer  ,
-	wednesday            integer  ,
-	thursday             integer  ,
-	friday               integer  ,
-	saturday             integer  ,
-	sunday               integer  ,
-	CONSTRAINT "schedule_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES imod( "imodID" )    
+	"monday"             integer  ,
+	tuesday"             integer  ,
+	"wednesday"          integer  ,
+	"thursday"           integer  ,
+	"friday"             integer  ,
+	"saturday"           integer  ,
+	"sunday"             integer  ,
+	CONSTRAINT "schedule_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES "imod"( "imodID" )    
  );
 
 CREATE TABLE "scheduleDate" ( 
 	"imodID"             integer  NOT NULL,
-	date                 varchar( 255 )  ,
-	CONSTRAINT "scheduleDates_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES imod( "imodID" )    
+	"date"               varchar( 255 )  ,
+	CONSTRAINT "scheduleDates_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES "imod"( "imodID" )    
  );
 
 CREATE INDEX fki_imodID ON "scheduleDate" ( "imodID" );
@@ -56,20 +56,16 @@ CREATE TABLE "content" (
 	CONSTRAINT "content_learningObjectiveID_fkey" FOREIGN KEY ( "learningObjectiveID" ) REFERENCES "learningObjective"( "learningObjectiveID" )    
  );
 
-CREATE INDEX fki_LearningObjectiveID ON content ( "learningObjectiveID" );
+CREATE INDEX fki_LearningObjectiveID ON "content" ( "learningObjectiveID" );
 
-CREATE TABLE "contentHeirarchy" ( 
+CREATE TABLE "contentHierarchy" ( 
 	"hierarchyID"        integer  NOT NULL,
 	"parentContentID"    integer  NOT NULL,
 	"leafContentID"      integer  NOT NULL,
 	CONSTRAINT "ContentHeirarchy_pkey" PRIMARY KEY ( "hierarchyID" ),
-	CONSTRAINT "leafContentID" FOREIGN KEY ( "leafContentID" ) REFERENCES content( "contentID" )    ,
-	CONSTRAINT "parentContentID" FOREIGN KEY ( "parentContentID" ) REFERENCES content( "contentID" )    
+	CONSTRAINT "leafContentID" FOREIGN KEY ( "leafContentID" ) REFERENCES "content"( "contentID" )    ,
+	CONSTRAINT "parentContentID" FOREIGN KEY ( "parentContentID" ) REFERENCES "content"( "contentID" )    
  );
-
-CREATE INDEX fki_leafContentID ON "contentHeirarchy" ( "leafContentID" );
-
-CREATE INDEX fki_parentContentID ON "contentHeirarchy" ( "parentContentID" );
 
 CREATE TABLE "contentResource" ( 
 	"contentResourceID"  integer  NOT NULL,
@@ -77,9 +73,7 @@ CREATE TABLE "contentResource" (
 	"contentResourceTitle" varchar( 255 )  ,
 	"contentResourceType" integer  NOT NULL,
 	CONSTRAINT "Resource_pkey" PRIMARY KEY ( "contentResourceID" ),
-	CONSTRAINT "contentResource_contentID_fkey" FOREIGN KEY ( "contentID" ) REFERENCES content( "contentID" )    ,
+	CONSTRAINT "contentResource_contentID_fkey" FOREIGN KEY ( "contentID" ) REFERENCES "content"( "contentID" )    ,
 	CONSTRAINT "contentResource_contentResourceType_fkey" FOREIGN KEY ( "contentResourceType" ) REFERENCES "contentResourceType"( "contentResourceTypeID" )    
  );
-
-CREATE INDEX Resource_ContentID_idx ON "contentResource" ( "contentID" );
 

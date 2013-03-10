@@ -13,6 +13,12 @@ CREATE TABLE "learningDomain" (
 	CONSTRAINT "learningDomain_pkey" PRIMARY KEY ( "domainID" )
  );
 
+CREATE TABLE "learningObjectiveCriteriaType" ( 
+	"criteriaTypeID"     integer  NOT NULL,
+	"criteriaTypeDescription" varchar( 255 )  ,
+	CONSTRAINT "learningObjectiveCriteriaType_pkey" PRIMARY KEY ( "criteriaTypeID" )
+ );
+
 CREATE TABLE "actionWord" ( 
 	"actionID"           integer  NOT NULL,
 	"categoryID"         integer  NOT NULL,
@@ -22,7 +28,7 @@ CREATE TABLE "actionWord" (
 	"domainID"           integer  NOT NULL,
 	CONSTRAINT "ActionWords_pkey" PRIMARY KEY ( "actionID" ),
 	CONSTRAINT "actionWord_domainID_fkey1" FOREIGN KEY ( "domainID" ) REFERENCES "learningDomain"( "domainID" )    ,
-	CONSTRAINT "actionWord_userID_fkey" FOREIGN KEY ( "userID" ) REFERENCES user( "userID" )    
+	CONSTRAINT "actionWord_userID_fkey" FOREIGN KEY ( "userID" ) REFERENCES "user"( "userID" )    
  );
 
 CREATE TABLE "domainCategory" ( 
@@ -32,10 +38,6 @@ CREATE TABLE "domainCategory" (
 	CONSTRAINT "domainCategory_pkey" PRIMARY KEY ( "domainID", "categoryID" ),
 	CONSTRAINT "domainID_fkey" FOREIGN KEY ( "domainID" ) REFERENCES "learningDomain"( "domainID" )    
  );
-
-CREATE INDEX DomainCategories_CategoryID_idx ON "domainCategory" ( "categoryID" );
-
-CREATE INDEX fki_domainID_fkey ON "domainCategory" ( "domainID" );
 
 CREATE TABLE "learningObjective" ( 
 	"learningObjectiveID" integer  NOT NULL,
@@ -49,13 +51,12 @@ CREATE TABLE "learningObjective" (
 	"contentID"          integer  NOT NULL,
 	"indicator"          varchar( 255 )  ,
 	"actionID"           integer  NOT NULL,
-	"criteriaType"       integer  NOT NULL,
+	"criteriaTypeID"     integer  NOT NULL,
 	CONSTRAINT "LearningObjetives_pkey" PRIMARY KEY ( "learningObjectiveID" ),
 	CONSTRAINT "actionID_fkey" FOREIGN KEY ( "actionID" ) REFERENCES "actionWord"( "actionID" )    ,
 	CONSTRAINT "learningObjetive_contentID_fkey" FOREIGN KEY ( "contentID" ) REFERENCES "content"( "contentID" )    ,
 	CONSTRAINT "learningObjetive_imodID_fkey" FOREIGN KEY ( "imodID" ) REFERENCES "imod"( "imodID" )    ,
-	CONSTRAINT "learningObjective_criteriaType_fkey" FOREIGN KEY ( "criteriaType" ) REFERENCES "learningObjectiveCriteriaType"( "criteriaTypeID" )    
+	CONSTRAINT "learningObjective_criteriaType_fkey" FOREIGN KEY ( "criteriaTypeID" ) REFERENCES "learningObjectiveCriteriaType"( "criteriaTypeID" )    ,
+	CONSTRAINT "learningObjective_learningObjectiveID_fkey" FOREIGN KEY ( "learningObjectiveID" ) REFERENCES "learningObjectiveCriteriaType"( "criteriaTypeID" )    
  );
-
-CREATE INDEX fki_actionID_fkey ON "learningObjective" ( "actionID" );
 

@@ -18,8 +18,6 @@ CREATE TABLE "user" (
 	CONSTRAINT "userRoleID" FOREIGN KEY ( "userRoleID" ) REFERENCES "userRole"( "userRoleID" )    
  );
 
-CREATE INDEX fki_userRoleID ON user ( "userRoleID" );
-
 CREATE TABLE "userProfile" ( 
 	"userID"             integer  NOT NULL,
 	"organization"       varchar( 255 )  ,
@@ -30,7 +28,7 @@ CREATE TABLE "userProfile" (
 	"state"              varchar( 255 )  ,
 	"country"            varchar( 255 )  ,
 	"zip"                varchar( 50 )  ,
-	CONSTRAINT "userID" FOREIGN KEY ( "userID" ) REFERENCES user( "userID" )    
+	CONSTRAINT "userID" FOREIGN KEY ( "userID" ) REFERENCES "user"( "userID" )    
  );
 
 CREATE INDEX fki_userID ON "userProfile" ( "userID" );
